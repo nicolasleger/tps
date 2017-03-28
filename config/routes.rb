@@ -202,6 +202,8 @@ Rails.application.routes.draw do
       resources :procedures, only: [:index, :show] do
         resources :dossiers, only: [:index, :show]
       end
+
+      get 'dossiers/:dossier_id/procedure_libelle' => 'dossiers#procedure_libelle'
     end
 
     namespace :statistiques do

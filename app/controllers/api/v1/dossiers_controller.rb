@@ -35,6 +35,15 @@ class API::V1::DossiersController < APIController
     render json: {}, status: 404
   end
 
+  skip_before_action :authenticate_user, only: ['procedure_libelle']
+
+  def procedure_libelle
+    dossier = Dossier.find(params[:dossier_id])
+    render json: { procedureLibelle: dossier.procedure.libelle }
+  rescue ActiveRecord::RecordNotFound
+    render json: {}, status: 404
+  end
+
   def pagination(dossiers)
     {
       page: dossiers.current_page,
