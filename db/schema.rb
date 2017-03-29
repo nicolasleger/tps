@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170313140834) do
+ActiveRecord::Schema.define(version: 20170328142700) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -106,7 +106,7 @@ ActiveRecord::Schema.define(version: 20170313140834) do
 
   create_table "closed_mails", force: :cascade do |t|
     t.text     "body"
-    t.string   "object"
+    t.text     "object"
     t.integer  "procedure_id"
     t.datetime "created_at",   null: false
     t.datetime "updated_at",   null: false
@@ -237,7 +237,7 @@ ActiveRecord::Schema.define(version: 20170313140834) do
   end
 
   create_table "initiated_mails", force: :cascade do |t|
-    t.string   "object"
+    t.text     "object"
     t.text     "body"
     t.integer  "procedure_id"
     t.datetime "created_at",   null: false
@@ -357,7 +357,7 @@ ActiveRecord::Schema.define(version: 20170313140834) do
 
   create_table "received_mails", force: :cascade do |t|
     t.text     "body"
-    t.string   "object"
+    t.text     "object"
     t.integer  "procedure_id"
     t.datetime "created_at",   null: false
     t.datetime "updated_at",   null: false
@@ -366,7 +366,7 @@ ActiveRecord::Schema.define(version: 20170313140834) do
 
   create_table "refused_mails", force: :cascade do |t|
     t.text     "body"
-    t.string   "object"
+    t.text     "object"
     t.integer  "procedure_id"
     t.datetime "created_at",   null: false
     t.datetime "updated_at",   null: false
@@ -403,6 +403,7 @@ ActiveRecord::Schema.define(version: 20170313140834) do
     t.integer  "procedure_id"
     t.integer  "order_place"
     t.string   "lien_demarche"
+    t.boolean  "mandatory",      default: false
   end
 
   create_table "users", force: :cascade do |t|
@@ -426,7 +427,7 @@ ActiveRecord::Schema.define(version: 20170313140834) do
 
   create_table "without_continuation_mails", force: :cascade do |t|
     t.text     "body"
-    t.string   "object"
+    t.text     "object"
     t.integer  "procedure_id"
     t.datetime "created_at",   null: false
     t.datetime "updated_at",   null: false
