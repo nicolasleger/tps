@@ -38,6 +38,10 @@ class PieceJustificative < ActiveRecord::Base
     end
   end
 
+  def mandatory_and_blank?
+    type_de_piece_justificative.mandatory? && empty?
+  end
+
   def self.accept_format
     " application/pdf,
       application/msword,

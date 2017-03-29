@@ -1,7 +1,7 @@
 require 'spec_helper'
 
 describe ChampsService do
-  describe 'save_formulaire' do
+  describe 'save_champs' do
     let!(:champ) { Champ.create(value: 'toto', type_de_champ: TypeDeChamp.new) }
     let!(:champ_mandatory_empty) { Champ.create(type_de_champ: TypeDeChamp.new(libelle: 'mandatory', mandatory: true)) }
     let!(:champ_datetime) do
@@ -19,15 +19,12 @@ describe ChampsService do
         time_hour:  { "'#{champ_datetime.id}'" => '12' },
         time_minute: { "'#{champ_datetime.id}'" => '24' }
       }
-      @errors = ChampsService.save_formulaire(champs,
-                                                                 params_hash,
-                                                                 check_mandatory)
+      @errors = ChampsService.save_champs(champs, params_hash, check_mandatory)
       champs.each(&:reload)
     end
 
     context 'check_mandatory is true' do
       let(:check_mandatory) { true }
-
       it 'saves the changed champ' do
         expect(champ.value).to eq('yop')
       end

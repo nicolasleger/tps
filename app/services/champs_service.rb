@@ -1,20 +1,21 @@
 class ChampsService
   class << self
-    def save_formulaire(champs, params, check_mandatory = true)
-      champs.select { |c| c.type_champ != 'datetime' }
-            .each { |c| c.value = params[:champs]["'#{c.id}'"] }
-
-      champs.select { |c| c.type_champ == 'datetime' }
-            .each { |c| c.value = parse_datetime(c.id, params) }
+    def save_champs(champs, params, check_mandatory = true)
+      fill_champs(champs, params)
 
       champs.select(&:changed?).each(&:save)
 
-      return [] unless check_mandatory
-      champs.select(&:mandatory_and_blank?)
-            .map { |c| build_error_message_for(c) }
+      check_mandatory ? build_error_messages(champs) : []
     end
 
     private
+
+    def fill_champs(champs, h)
+      datetimes, not_datetimes = champs.partition { |c| c.type_champ == 'datetime' }
+
+      not_datetimes.each { |c| c.value = h[:champs]["'#{c.id}'"] }
+      datetimes.each { |c| c.value = parse_datetime(c.id, h) }
+    end
 
     def parse_datetime(champ_id, h)
       "#{h[:champs]["'#{champ_id}'"]} #{extract_hour(champ_id, h)}:#{extract_minute(champ_id, h)}"
@@ -28,7 +29,12 @@ class ChampsService
       h[:time_minute]["'#{champ_id}'"]
     end
 
-    def build_error_message_for(champ)
+    def build_error_messages(champs)
+      champs.select(&:mandatory_and_blank?)
+            .map { |c| build_champ_error_message(c) }
+    end
+
+    def build_champ_error_message(champ)
       { message: "Le champ #{champ.libelle} doit être rempli." }
     end
   end
