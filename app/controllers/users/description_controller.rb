@@ -34,7 +34,7 @@ class Users::DescriptionController < UsersController
 
     @champs = @dossier.ordered_champs
 
-    check_mandatory_fields = !draft_submission
+    check_mandatory_fields = !draft_submission?
 
     if params[:champs]
       champs_service_errors = ChampsService.save_formulaire_and_returns_errors @dossier.champs,
@@ -115,7 +115,7 @@ class Users::DescriptionController < UsersController
 
   private
 
-  def draft_submission
+  def draft_submission?
     params[:submit] && params[:submit].keys.first == 'brouillon'
   end
 
