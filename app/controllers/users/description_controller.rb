@@ -50,10 +50,7 @@ class Users::DescriptionController < UsersController
     end
 
     errors_upload = PiecesJustificativesService.upload!(@dossier, current_user, params)
-    unless errors_upload.empty?
-      flash.alert = errors_upload.html_safe
-      return redirect_to users_dossier_description_path(dossier_id: @dossier.id)
-    end
+    return redirect_to_description_with_errors(@dossier, errors_upload) if errors_upload.any?
 
     if draft_submission?
       flash.notice = 'Votre brouillon a bien été sauvegardé.'
@@ -85,9 +82,9 @@ class Users::DescriptionController < UsersController
 
     if !((errors_upload = PiecesJustificativesService.upload!(@dossier, current_user, params)).empty?)
       if flash.alert.nil?
-        flash.alert = errors_upload.html_safe
+        flash.alert = errors_upload.join('<br>').html_safe
       else
-        flash.alert = (flash.alert + '<br />' + errors_upload.html_safe).html_safe
+        flash.alert = (flash.alert + '<br />' + errors_upload.join('<br>').html_safe).html_safe
       end
 
     else
