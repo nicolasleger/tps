@@ -1,0 +1,46 @@
+@import "constants";
+@import "colors";
+@import "mixins";
+@import "typography";
+
+.header {
+  @extend %new-type;
+  height: 72px;
+  background-color: white;
+  /* FIXME */
+  margin-top: -60px;
+}
+
+.header-inner-content {
+  width: $page-width;
+  margin: 0 auto;
+}
+
+.header-logo {
+  margin-top: 17px;
+}
+
+$header-login-button-height: 36px;
+$header-login-button-border-size: 1px;
+.header-login-button {
+  display: inline-block;
+  height: $header-login-button-height;
+  line-height: $header-login-button-height - (2 * $header-login-button-border-size);
+  border-radius: $header-login-button-height;
+  @include horizontal-padding(16px);
+  border: $header-login-button-border-size solid $blue;
+  color: $blue;
+  font-size: 14px;
+  margin-top: 18px;
+
+  &:hover {
+    color: white;
+    text-decoration: none;
+    background-color: $light-blue;
+  }
+
+  &:focus {
+    color: $blue;
+    text-decoration: none;
+  }
+}
