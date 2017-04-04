@@ -14,4 +14,18 @@ describe StatsController, type: :controller do
 
     it { expect(subject).to eq {} }
   end
+
+  describe '#cumulative_hash' do
+    before do
+      FactoryGirl.create(:procedure, :published => , :create_at)
+      FactoryGirl.create(:procedure, :published => , :create_at)
+      FactoryGirl.create(:procedure, :published => , :create_at)
+    end
+
+    let (:association) { Procedure.where(:published => true) }
+
+    subject { StatsController.new.send(:cumulative_hash, association) }
+
+    it { expect(subject).to eq {} }
+  end
 end
