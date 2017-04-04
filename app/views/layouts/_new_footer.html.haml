@@ -1,0 +1,31 @@
+.footer
+  .footer-inner-content
+    %ul.footer-columns
+      %li.footer-column
+        %ul.footer-logos
+          %li
+            %img{ :src => image_url("footer/logo-rf.svg"), :class => "footer-logo footer-logo-rf" }
+          %li
+            = link_to image_tag("footer/logo-beta-gouv-fr.svg",
+                :class => "footer-logo footer-logo-beta-gouv-fr"),
+              "https://beta.gouv.fr/"
+
+      %li.footer-column
+        %ul.footer-links
+          %li.footer-link
+            = link_to "SGMAP 2017", "#", :class => "footer-link"
+          %li.footer-link
+            = link_to "Nouveautés", "#", :class => "footer-link"
+          %li.footer-link
+            = link_to "Statistiques", "#", :class => "footer-link"
+
+      %li.footer-column
+        %ul.footer-links
+          %li.footer-link
+            = link_to "Contact",
+              "mailto:#{t('dynamics.contact_email')}",
+              :class => "footer-link"
+          %li.footer-link
+            = link_to "Mentions légales", "#", :class => "footer-link"
+          %li.footer-link
+            = link_to "CGU", "#", :class => "footer-link"
